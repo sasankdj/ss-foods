@@ -66,7 +66,7 @@ function OrderSidebar() {
    );
 }
 
-function DeliveryDetailsForm({ paymentMethod, billingAddressSame, setPaymentMethod, setBillingAddressSame, setAddressForm, addressForm, handleSave }) {
+function DeliveryDetailsForm({order, paymentMethod, billingAddressSame, setPaymentMethod, setBillingAddressSame, setAddressForm, addressForm, handleSave }) {
    const { navigate } = useContext(MyContext)
    const handleChange = (e) => {
       const { name, value } = e.target;
@@ -79,7 +79,7 @@ function DeliveryDetailsForm({ paymentMethod, billingAddressSame, setPaymentMeth
       e.preventDefault();
       console.log(addressForm);
       handleSave()
-      navigate("/success")
+     
 
    }
    const { Cart,Token } = useContext(MyContext)
@@ -354,10 +354,11 @@ function DeliveryDetailsForm({ paymentMethod, billingAddressSame, setPaymentMeth
 }
 
 export default function CheckOut() {
-   const { Token, setOrders } = useContext(MyContext)
+   const { Token, setOrders,navigate } = useContext(MyContext)
    const [paymentMethod, setPaymentMethod] = useState("card");
    const [billingAddressSame, setBillingAddressSame] = useState(true);
    // const [addresses, setAddresses] = useState([]);
+   const [Order, setOrder] = useState({})
    const [addressForm, setAddressForm] = useState({
       fullName: "",
       email: "",
@@ -378,13 +379,22 @@ export default function CheckOut() {
             Authorization: `Bearer ${Token}`
          }
       })
-      console.log(res.data);
+      // console.log(res.data);
       const r = await axios.post(`${API_URL}/order/place`, {}, {
          headers: {
             Authorization: `Bearer ${Token}`
          }
       })
       console.log(r.data)
+      setOrder(r.data)
+       navigate("/success",{
+         state:{
+            
+            orderId:r.data.id,
+            orderDate:r.data.orderDate
+         }
+
+      })
       // setOrders(r.data)
    }
 
@@ -406,6 +416,7 @@ export default function CheckOut() {
                setBillingAddressSame={setBillingAddressSame}
                setAddressForm={setAddressForm}
                addressForm={addressForm}
+               order={Order}
             />
          </div>
       </main>

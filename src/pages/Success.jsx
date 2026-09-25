@@ -1,12 +1,18 @@
-import { useContext, useEffect } from "react";
+import { useContext,  } from "react";
 import { MyContext } from "../context/MyContext";
-import axios from "axios";
+
+import { useLocation } from "react-router-dom";
 
 export default function Success() {
     const {TotalPrice,navigate}= useContext(MyContext)
-    useEffect(() => {
-     axios.get("")
-    }, [])
+    const location = useLocation();
+    const {orderDate,orderId}= location.state || {}
+   
+    console.log(orderDate);
+    
+    // useEffect(() => {
+    //  axios.get("")
+    // }, [])
     
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
@@ -29,11 +35,11 @@ export default function Success() {
         <div className="bg-gray-50 rounded-xl p-4 text-left mb-6 border border-gray-200/60">
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-500">Order Number</span>
-            <span className="font-semibold text-gray-800">#987654321</span>
+            <span className="font-semibold text-gray-800">{orderId}</span>
           </div>
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-500">Date</span>
-            <span className="font-medium text-gray-800"></span>
+            <span className="font-medium text-gray-800">{orderDate}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Total Amount</span>
@@ -43,11 +49,13 @@ export default function Success() {
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button onClick={()=>navigate(`/track/${id}`)}
+          <button onClick={()=>navigate(`/track/${orderId}`)}
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl transition duration-200 shadow-sm">
             Track Order
           </button>
-          <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-4 rounded-xl transition duration-200">
+          <button
+          onClick={()=>navigate("/products")}
+           className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-4 rounded-xl transition duration-200">
             Continue Shopping
           </button>
         </div>
