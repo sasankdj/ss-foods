@@ -55,10 +55,18 @@ const Navbar = () => {
                 <a onClick={()=>navigate("/contact")} className="block cursor-pointer">Contact</a>
                 <a onClick={()=>navigate("/products")} className="block cursor-pointer">Products</a>
                 <a onClick={()=>navigate("/orders")} className="block cursor-pointer">Orders</a>
+                <a onClick={()=>navigate("/cart")} className="block cursor-pointer">Cart</a>
 
 
-                <button className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
+                <button
+                onClick={()=>navigate("/login")}
+                 className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
                     Login
+                </button>
+                 <button
+                onClick={()=>navigate("/signup")}
+                 className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
+                    Signup
                 </button>
             </div>
 
