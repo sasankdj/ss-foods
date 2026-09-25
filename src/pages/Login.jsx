@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import axios from "axios"
 import { MyContext } from "../context/MyContext";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 const Login = () => {
     const [Username, setUsername] = useState("")
     const [Password, setPassword] = useState("")
@@ -16,13 +17,13 @@ const Login = () => {
         
     
         // console.log(Username + " " + Password);
-        const response = await axios.post("http://localhost:8080/auth/login", {
+        const response = await axios.post(`${API_URL}/auth/login`, {
             username: Username,
             password: Password
         });
         console.log(response.data);
 
-        const getRole=await axios.get("http://localhost:8080/auth/role",{
+        const getRole=await axios.get(`${API_URL}/auth/role`,{
 
             params:{
                 key:response.data

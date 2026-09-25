@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const AdminUsers = () => {
 
     const [users, setUsers] = useState([]);
@@ -13,7 +13,7 @@ const AdminUsers = () => {
         try {
 
             const { data } = await axios.get(
-                "http://localhost:8080/auth/users",
+                `${API_URL}/auth/users`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -43,7 +43,7 @@ const AdminUsers = () => {
         try {
 
             await axios.delete(
-                `http://localhost:8080/auth/users/${id}`,
+                `${API_URL}/auth/users/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

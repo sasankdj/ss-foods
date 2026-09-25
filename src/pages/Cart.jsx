@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react"
 import { MyContext } from "../context/MyContext"
 import axios from "axios"
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 const Cart = () => {
     // const [ setOrders] = useState([])
     const { setCart, Cart, Token, navigate, setPaymentMethod ,setTotalPrice} = useContext(MyContext)
     const fetch = async () => {
-        const res = await axios.get("http://localhost:8080/cart/get", {
+        const res = await axios.get(`${API_URL}/cart/get`, {
             headers: {
                 Authorization: `Bearer ${Token}`
             }
@@ -23,7 +24,7 @@ const Cart = () => {
     const updateQuantity = async (cartItemId, quantity) => {
         try {
             await axios.put(
-                `http://localhost:8080/cart/${cartItemId}/${quantity}`, {},
+                `${API_URL}/cart/${cartItemId}/${quantity}`, {},
 
                 {
                     headers: {
@@ -45,7 +46,7 @@ const Cart = () => {
     const deleteItem = async (e) => {
         console.log(e);
 
-        await axios.delete(`http://localhost:8080/cart/delete/${e.id}`, {
+        await axios.delete(`${API_URL}/cart/delete/${e.id}`, {
             headers: {
                 Authorization: `Bearer ${Token}`
             }

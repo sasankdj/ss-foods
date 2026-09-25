@@ -4,7 +4,7 @@ import { MyContext } from '../context/MyContext'
 import ProductCard from '../Components/ProductCard'
 import Categories from '../Components/Categories'
 import { useParams } from 'react-router-dom'
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Products = () => {
     const { Token, Products, setProducts, navigate } = useContext(MyContext)
     const [Search, setSearch] = useState("");
@@ -19,7 +19,7 @@ const Products = () => {
 
             // if(!category) return
 
-            const url = category ? "http://localhost:8080/api/products/category" : "http://localhost:8080/api/products";
+            const url = category ? `${API_URL}/api/products/category` : `${API_URL}/api/products`;
 
             await axios.get(url, {
                 params: {
@@ -65,7 +65,7 @@ const Products = () => {
         return () => clearTimeout(timer)
     }, [Search])
     const fetchProducts = async () => {
-        await axios.get("http://localhost:8080/api/products/search",
+        await axios.get(`${API_URL}/api/products/search`,
             {
                 params: {
                     name: Search
@@ -80,7 +80,7 @@ const Products = () => {
     }
     const  fetchSortedProducts=async (field,dir)=>{
         await axios.get(
-        "http://localhost:8080/api/products/sort",
+        `${API_URL}/api/products/sort`,
         {
             params: {
                 category:category,

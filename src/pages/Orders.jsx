@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../context/MyContext";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Orders = () => {
     const boxIcon =
         "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/boxIcon.svg";
@@ -16,7 +16,7 @@ const Orders = () => {
     const fetchOrders = async () => {
         try {
             const res = await axios.get(
-                "http://localhost:8080/order/getOrders",
+               `${API_URL}/order/getOrders`,
                 {
                     headers: {
                         Authorization: `Bearer ${Token}`,

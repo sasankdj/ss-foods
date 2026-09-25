@@ -5,7 +5,7 @@ import { MyContext } from "../context/MyContext";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ProductCard from "./ProductCard";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const ProductDetail = () => {
     const { Token,navigate} = useContext(MyContext)
     const { id } = useParams()
@@ -26,7 +26,7 @@ const ProductDetail = () => {
 
     const fetch = async () => {
 
-        const res = await axios.get(`http://localhost:8080/api/product/${id}`, {
+        const res = await axios.get(`${API_URL}/api/product/${id}`, {
             headers: {
                 Authorization: `Bearer ${Token}`
             }
@@ -37,7 +37,7 @@ const ProductDetail = () => {
     }
   const handleAdd=async()=>{
 
-        await axios.post(`http://localhost:8080/cart/add/${id}`,null,
+        await axios.post(`${API_URL}/cart/add/${id}`,null,
             {
                 headers:{
                       Authorization:`Bearer ${Token}`
@@ -49,7 +49,7 @@ const ProductDetail = () => {
         
     }
    const fetchSimilar=async()=>{
-     await axios.get(`http://localhost:8080/api/products/category`,
+     await axios.get(`${API_URL}/api/products/category`,
             {
                 params:{
                     category:Product.category
@@ -66,7 +66,7 @@ const ProductDetail = () => {
         })
    }
 const handleBuy=async ()=>{
-        await axios.post(`http://localhost:8080/cart/add/${id}`,null,
+        await axios.post(`${API_URL}/cart/add/${id}`,null,
             {
                 headers:{
                       Authorization:`Bearer ${Token}`

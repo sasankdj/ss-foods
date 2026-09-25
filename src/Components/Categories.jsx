@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import { MyContext } from '../context/MyContext';
-
-
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Categories() {
    const [getCategories, setCategories] = useState([])
    const {Token,navigate} = useContext(MyContext)
    const fetchCategories=()=>{
-      axios.get("http://localhost:8080/api/products/getcategories",{
+      axios.get(`${API_URL}/api/products/getcategories`,{
          headers:{
             Authorization:`Bearer ${Token}`
          }

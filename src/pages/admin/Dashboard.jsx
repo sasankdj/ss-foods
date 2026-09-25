@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Dashboard = () => {
 
     const [stats, setStats] = useState({
@@ -19,7 +19,7 @@ const Dashboard = () => {
         try {
 
             const { data } = await axios.get(
-                "http://localhost:8080/admin/dashboard",
+                `${API_URL}/admin/dashboard`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -38,7 +38,7 @@ const Dashboard = () => {
         try {
 
             const { data } = await axios.get(
-                "http://localhost:8080/order/get",
+                `${API_URL}/order/get`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -57,7 +57,7 @@ const Dashboard = () => {
         try {
 
             const { data } = await axios.get(
-                "http://localhost:8080/api/products",
+               `${API_URL}/api/products`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

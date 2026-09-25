@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const EditProduct = () => {
 
     const { id } = useParams();
@@ -18,7 +18,7 @@ const EditProduct = () => {
         try {
 
             const { data } = await axios.get(
-                `http://localhost:8080/api/product/${id}`,{
+                `${API_URL}/api/product/${id}`,{
                     headers:{
                         Authorization:`Bearer ${token}`
                     }
@@ -54,7 +54,7 @@ const EditProduct = () => {
         try {
 
             await axios.put(
-                `http://localhost:8080/api/product/${id}`,
+                `${API_URL}/api/product/${id}`,
                 product,
                 {
                     headers: {

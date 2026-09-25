@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../context/MyContext";
 import axios from "axios";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function OrderSidebar() {
    const { Cart } = useContext(MyContext)
    // console.log(Cart);
@@ -92,7 +92,7 @@ function DeliveryDetailsForm({ paymentMethod, billingAddressSame, setPaymentMeth
    }, [])
    
    const fetchAddress=()=>{
-      axios.get("http://localhost:8080/checkout",{
+      axios.get(`${API_URL}/checkout`,{
          headers:{
             Authorization:`Bearer ${Token}`
          }
@@ -373,13 +373,13 @@ export default function CheckOut() {
 
    }
    const checkOut = async () => {
-      const res = await axios.post("http://localhost:8080/checkout", addressForm, {
+      const res = await axios.post(`${API_URL}/checkout`, addressForm, {
          headers: {
             Authorization: `Bearer ${Token}`
          }
       })
       console.log(res.data);
-      const r = await axios.post("http://localhost:8080/order/place", {}, {
+      const r = await axios.post(`${API_URL}/order/place`, {}, {
          headers: {
             Authorization: `Bearer ${Token}`
          }

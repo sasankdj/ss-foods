@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useContext, useState } from "react";
 import { MyContext } from "../context/MyContext";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Signup = () => {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
@@ -10,7 +10,7 @@ const Signup = () => {
     const handleSubmit=async(e)=>{
         e.preventDefault()
 e
-        const response= await axios.post("http://localhost:8080/auth/signup",{
+        const response= await axios.post(`${API_URL}/auth/signup`,{
             email:Email,
             username:Username,
             password:Password,
