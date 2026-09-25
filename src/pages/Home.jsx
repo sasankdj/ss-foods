@@ -1,6 +1,8 @@
+import { useContext } from "react";
+import { MyContext } from "../context/MyContext";
 
 const Home = () => {
-  
+  const{navigate}= useContext(MyContext)
   const products = [
     {
       id: 1,
@@ -41,7 +43,10 @@ const Home = () => {
             <p className="text-lg mb-6">
               Discover amazing products at unbeatable prices.
             </p>
-            <button className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+            <button
+            onClick={()=>navigate("/products")}
+            
+             className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
               Shop Now
             </button>
           </div>
