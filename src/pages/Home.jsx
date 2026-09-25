@@ -1,12 +1,6 @@
-import { useEffect } from "react";
 
 const Home = () => {
-  useEffect(() => {
-    console.log("HOME PAGE MOUNTED");
-}, []);
-useEffect(() => {
-    console.trace("HOME MOUNTED");
-}, []);
+  
   const products = [
     {
       id: 1,

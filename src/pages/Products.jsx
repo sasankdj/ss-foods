@@ -8,7 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const Products = () => {
     const { Token, Products, setProducts, navigate } = useContext(MyContext)
     const [Search, setSearch] = useState("");
-    console.log(Token);
+    // console.log(Token);
 
     const { category } = useParams();
     useEffect(() => {
