@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const AddProduct = () => {
 
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const AddProduct = () => {
         try {
 
             await axios.post(
-                "http://localhost:8080/api/product",
+               `${API_URL}/api/product`,
                 product,
                 {
                     headers: {

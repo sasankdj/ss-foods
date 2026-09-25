@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const AdminOrderDetails = () => {
 
     const { id } = useParams();
@@ -17,7 +17,7 @@ const AdminOrderDetails = () => {
         try {
 
             const { data } = await axios.get(
-                `http://localhost:8080/order/getOrder/${id}`,
+                `${API_URL}/order/getOrder/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -56,7 +56,7 @@ const AdminOrderDetails = () => {
         try {
 
             await axios.put(
-                `http://localhost:8080/order/update/${id}`,
+                `${API_URL}/order/update/${id}`,
                 {},
                 {
                     params:{

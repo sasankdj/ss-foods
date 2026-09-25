@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const AdminCategories = () => {
 
     const [categories, setCategories] = useState([]);
@@ -14,7 +14,7 @@ const AdminCategories = () => {
         try {
 
             const { data } = await axios.get(
-                "http://localhost:8080/admin/categories",
+                `${API_URL}/admin/categories`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -44,7 +44,7 @@ const AdminCategories = () => {
         try {
 
             await axios.post(
-                "http://localhost:8080/admin/categories",
+                `${API_URL}/admin/categories`,
                 {
                     name
                 },
@@ -73,7 +73,7 @@ const AdminCategories = () => {
         try {
 
             await axios.delete(
-                `http://localhost:8080/admin/categories/${id}`,
+              `${API_URL}/admin/categories/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

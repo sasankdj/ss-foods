@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MyContext } from '../context/MyContext';
 import axios from 'axios';
-
+const API_URL = import.meta.env.VITE_API_URL;
 const products = [
    {
       id: 1,
@@ -85,7 +85,7 @@ export default function TrackOrder() {
    const fetchOrder =async()=>{
 
       const res = await axios.get(
-         `http://localhost:8080/order/getOrder/${id}`,
+         `${API_URL}/order/getOrder/${id}`,
          {
             headers: {
                Authorization: `Bearer ${Token}`,

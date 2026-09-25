@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { MyContext } from "../context/MyContext";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 export default function ProductCard({product}) {
     // console.log(product);
     
@@ -10,7 +11,7 @@ export default function ProductCard({product}) {
     
     const handleAdd=async()=>{
       
-        await axios.post(`http://localhost:8080/cart/add/${product.id}`,null,
+        await axios.post(`${API_URL}/cart/add/${product.id}`,null,
             {
                 headers:{
                       Authorization:`Bearer ${Token}`
@@ -24,7 +25,7 @@ export default function ProductCard({product}) {
         console.log("added to cart");
     }
     const handleBuy=async ()=>{
-        await axios.post(`http://localhost:8080/cart/add/${product.id}`,null,
+        await axios.post(`${API_URL}/cart/add/${product.id}`,null,
             {
                 headers:{
                       Authorization:`Bearer ${Token}`

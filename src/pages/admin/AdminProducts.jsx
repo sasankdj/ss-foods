@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const AdminProducts = () => {
 
     const [products, setProducts] = useState([]);
@@ -16,7 +16,7 @@ const AdminProducts = () => {
         try {
 
             const { data } = await axios.get(
-                "http://localhost:8080/api/products",
+                `${API_URL}/api/products`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -40,7 +40,7 @@ const AdminProducts = () => {
         try {
 
             await axios.delete(
-                `http://localhost:8080/api/product/${id}`,
+                `${API_URL}/api/product/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
