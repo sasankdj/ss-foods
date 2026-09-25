@@ -34,7 +34,7 @@ const Orders = () => {
     const handleClick=(e)=>{
         console.log(e);
         
-        navigate(`/track/3`)
+        navigate(`/track/${e.id}`)
     }
     return (
         <div className="max-w-5xl mx-auto p-6">
@@ -53,7 +53,7 @@ const Orders = () => {
                         className="border rounded-xl p-6 mb-6 shadow-sm bg-white"
                     >
                         {/* Order Header */}
-                        <div onClick={()=>handleClick()}
+                        <div onClick={()=>handleClick(order)}
                         className="flex flex-wrap justify-between gap-4 border-b pb-4 mb-4">
                             <div>
                                 <p className="font-semibold">

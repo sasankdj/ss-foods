@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../context/MyContext";
 import axios from "axios";
+import AddressSelector from "../Components/AddressSelector";
 const API_URL = import.meta.env.VITE_API_URL;
 function OrderSidebar() {
    const { Cart } = useContext(MyContext)
@@ -67,6 +68,9 @@ function OrderSidebar() {
 }
 
 function DeliveryDetailsForm({order, paymentMethod, billingAddressSame, setPaymentMethod, setBillingAddressSame, setAddressForm, addressForm, handleSave }) {
+
+   const [selectedAddress, setSelectedAddress] = useState(null);
+ 
    const { navigate } = useContext(MyContext)
    const handleChange = (e) => {
       const { name, value } = e.target;
@@ -82,36 +86,64 @@ function DeliveryDetailsForm({order, paymentMethod, billingAddressSame, setPayme
      
 
    }
+
+   const handlePay = async () => {
+   const r = await axios.post(
+      `${API_URL}/order/place`,
+      {},
+      {
+         headers: {
+            Authorization: `Bearer ${Token}`
+         }
+      }
+   );
+
+   navigate("/success", {
+      state: {
+         orderId: r.data.id,
+         orderDate: r.data.orderDate
+      }
+   });
+};
    const { Cart,Token } = useContext(MyContext)
 
    const totalPrice = Cart.reduce((total, item) => total + item.quantity * item.product.price, 0)
-   const [Addresses, setAddresses] = useState([])
-   const [Address, setAddress] = useState()
+   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
+
+ 
    useEffect(() => {
-     fetchAddress();
-   }, [])
+      if(selectedAddress){
+         setShowNewAddressForm(false)
+         setAddressForm({
+              fullName: selectedAddress.fullName || "",
+            email: selectedAddress.email || "",
+            phoneNumber: selectedAddress.phoneNumber || "",
+            address: selectedAddress.address || "",
+            city: selectedAddress.city || "",
+            state: selectedAddress.state || "",
+            pincode: selectedAddress.pincode || ""
+         })
+      }
+   }, [selectedAddress])
    
-   const fetchAddress=()=>{
-      axios.get(`${API_URL}/checkout`,{
-         headers:{
-            Authorization:`Bearer ${Token}`
-         }
-      }).then(res=>{setAddress(res.data)
-         console.log(res.data);
-         
-      })
-   }
    return (
       <section className="w-full h-max rounded-md py-8 px-8 xl:px-12">
-         <div>
-            {
-               Addresses.map((add)=>(
-                  <div>
-                    <h1>hi</h1>
-                  </div>
-               ))
-            }
-         </div>
+           <AddressSelector 
+   selectedAddress={selectedAddress}
+   setSelectedAddress={setSelectedAddress}
+   />
+         <button
+    type="button"
+    onClick={() => {
+        setSelectedAddress(null);
+        setShowNewAddressForm(true);
+    }}
+    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
+>
+    + Add New Address
+</button>
+
+{showNewAddressForm && (
          <form onSubmit={handleSubmit}>
             {/* Delivery Details */}
             <fieldset>
@@ -349,6 +381,21 @@ function DeliveryDetailsForm({order, paymentMethod, billingAddressSame, setPayme
                </button>
             </div>
          </form>
+         )}
+         {!showNewAddressForm && (
+
+         
+           <div className="mt-8">
+               <button
+                  onClick={()=>handlePay()}
+                  type="submit"
+
+                  className="w-full px-3.5 py-2 text-white text-sm font-semibold rounded-md cursor-pointer bg-blue-600 hover:bg-blue-700 border border-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+               >
+                  Pay {totalPrice}
+               </button>
+            </div>
+            )}
       </section>
    )
 }
@@ -358,7 +405,7 @@ export default function CheckOut() {
    const [paymentMethod, setPaymentMethod] = useState("card");
    const [billingAddressSame, setBillingAddressSame] = useState(true);
    // const [addresses, setAddresses] = useState([]);
-   const [Order, setOrder] = useState({})
+
    const [addressForm, setAddressForm] = useState({
       fullName: "",
       email: "",
@@ -379,14 +426,17 @@ export default function CheckOut() {
             Authorization: `Bearer ${Token}`
          }
       })
-      // console.log(res.data);
-      const r = await axios.post(`${API_URL}/order/place`, {}, {
+      console.log(res.data);
+      const r = await axios.post(`${API_URL}/order/place`, {
+         id:res.data.id
+      }, {
          headers: {
             Authorization: `Bearer ${Token}`
          }
       })
       console.log(r.data)
-      setOrder(r.data)
+      
+      
        navigate("/success",{
          state:{
             
@@ -416,7 +466,7 @@ export default function CheckOut() {
                setBillingAddressSame={setBillingAddressSame}
                setAddressForm={setAddressForm}
                addressForm={addressForm}
-               order={Order}
+               
             />
          </div>
       </main>
